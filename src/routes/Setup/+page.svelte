@@ -46,6 +46,8 @@
         formData.append("hostName", hostName);
         formData.append("explanationLevel", explanationLevelSelected);
         formData.append("voice_id", voiceSelected.voice_id);
+        formData.append("openai_api_key", sessionStorage.getItem("openai_api_key"));
+        formData.append("elabs_api_key", sessionStorage.getItem("elabs_api_key"));
 
         const res = await fetch(`${env.PUBLIC_API_URL}update`, {
             method: "POST",
