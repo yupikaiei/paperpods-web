@@ -53,7 +53,7 @@
         if (json.error) {
             error = json.error;
         } else {
-            window.location.href = "/";
+            window.location.href = "/Login";
         }
     };
 </script>
