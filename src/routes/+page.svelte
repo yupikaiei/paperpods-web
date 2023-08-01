@@ -1,16 +1,17 @@
 <!-- create a login page -->
 <script>
     import { onMount } from "svelte";
-    import {
-        PUBLIC_API_URL
-    } from '$env/static/public'
+    import { PUBLIC_API_URL } from "$env/dynamic/public";
 
     let username = "";
     let password = "";
     let error = "";
 
     onMount(async () => {
-        if (sessionStorage.getItem("id") !== null && sessionStorage.getItem("podcast") !== undefined) {
+        if (
+            sessionStorage.getItem("id") !== null &&
+            sessionStorage.getItem("podcast") !== undefined
+        ) {
             window.location.href = "/Upload";
         } else if (sessionStorage.getItem("id") !== null) {
             window.location.href = "/Setup";
@@ -30,7 +31,7 @@
             body: formData,
         });
 
-        console.log(response)
+        console.log(response);
 
         const json = await response.json();
         if (json.error) {
@@ -58,13 +59,10 @@
         <div class="text-center lg:text-left">
             <div class="flex justify-center">
                 <figure>
-                    <img
-                        src="logo.png"
-                        alt="Logo"
-                    />
+                    <img src="logo.png" alt="Logo" />
                 </figure>
             </div>
-            <h1 class="text-5xl font-bold"> PaperPods</h1>
+            <h1 class="text-5xl font-bold">PaperPods</h1>
             <p class="py-6">
                 Turn research papers into your own custom podcasts
             </p>
@@ -100,7 +98,9 @@
                 </div>
                 <div class="form-control mt-6">
                     <a href="/Register" class="btn btn">Sign up</a>
-                    <button class="btn btn-primary" on:click={login}>Sign in </button>
+                    <button class="btn btn-primary" on:click={login}
+                        >Sign in
+                    </button>
                 </div>
             </div>
         </div>
@@ -108,7 +108,6 @@
 </div>
 
 <style>
-
     .error {
         color: red;
     }

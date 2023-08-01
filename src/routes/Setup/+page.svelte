@@ -5,7 +5,7 @@
 
     import {
         PUBLIC_API_URL
-    } from '$env/static/public'
+    } from '$env/dynamic/public'
 
     let podcastName = "";
     let hostName = "";
