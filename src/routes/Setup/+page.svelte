@@ -19,6 +19,11 @@
         env = {
             PUBLIC_API_URL: sessionStorage.getItem("serverUrl"),
         };
+        // console.log(sessionStorage.getItem("serverUrl"));
+        // console.log(sessionStorage.getItem("podcastName"));
+        // console.log(sessionStorage.getItem("openai_api_key"));
+        // console.log(sessionStorage.getItem("elabs_api_key"));
+
         podcastName = sessionStorage.getItem("podcastName") !== 'null' ? sessionStorage.getItem("podcastName") : "";
         hostName = sessionStorage.getItem("hostName") !== 'null' ? sessionStorage.getItem("hostName") : "";
         explanationLevelSelected = sessionStorage.getItem("explanationLevel") !== 'null' ? sessionStorage.getItem("explanationLevel") : "teenager";

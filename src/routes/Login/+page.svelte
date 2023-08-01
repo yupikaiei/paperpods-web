@@ -37,20 +37,23 @@
             body: formData,
         });
 
-        console.log(response);
-
+        
         const json = await response.json();
+        console.log(json);
         if (json.error) {
             error = json.error;
         } else {
+            console.log("storing in session");
             sessionStorage.setItem("username", json.username);
             sessionStorage.setItem("id", json.id);
             sessionStorage.setItem("podcastName", json.podcastName);
             sessionStorage.setItem("hostname", json.hostname);
             sessionStorage.setItem("explanationLevel", json.explanationLevel);
             sessionStorage.setItem("voice_id", json.voice_id);
-            sessionStorage.setItem("openai-api-key", json.openai_api_key);
-            sessionStorage.setItem("elabs-api-key", json.elabs_api_key);
+            // console.log(json.openai_api_key)
+            sessionStorage.setItem("openai_api_key", json.openai_api_key);
+            sessionStorage.setItem("elabs_api_key", json.elabs_api_key);
+            // console.log(json.elabs_api_key)
 
             if (json.podcast != null) {
                 window.location.href = "/Upload";
