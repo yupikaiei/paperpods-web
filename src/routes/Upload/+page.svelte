@@ -55,6 +55,8 @@
       method: "POST",
       headers: {
         "Access-Control-Allow-Origin": "*",
+        "openai-api-key": sessionStorage.getItem("openai_api_key"),
+        "elabs-api-key": sessionStorage.getItem("elabs_api_key"),
       },
       body: formData,
     });

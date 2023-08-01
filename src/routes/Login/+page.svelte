@@ -49,6 +49,8 @@
             sessionStorage.setItem("hostname", json.hostname);
             sessionStorage.setItem("explanationLevel", json.explanationLevel);
             sessionStorage.setItem("voice_id", json.voice_id);
+            sessionStorage.setItem("openai-api-key", json.openai_api_key);
+            sessionStorage.setItem("elabs-api-key", json.elabs_api_key);
 
             if (json.podcast != null) {
                 window.location.href = "/Upload";
