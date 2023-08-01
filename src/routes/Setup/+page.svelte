@@ -3,10 +3,6 @@
     import VoiceInfo from "../../components/VoiceInfo.svelte";
     import VoiceSelectionList from "../../components/VoiceSelectionList.svelte";
 
-    import {
-        PUBLIC_API_URL
-    } from '$env/dynamic/public'
-
     let podcastName = "";
     let hostName = "";
     let explanationLevel = ["child", "teenager", "adult"];
@@ -15,8 +11,14 @@
     let voices = [];
     let voiceSelected = null;
     let error = "";
+    let env = {
+        PUBLIC_API_URL: "",
+    };
 
     onMount(() => {
+        env = {
+            PUBLIC_API_URL: sessionStorage.getItem("serverUrl"),
+        };
         podcastName = sessionStorage.getItem("podcastName") !== 'null' ? sessionStorage.getItem("podcastName") : "";
         hostName = sessionStorage.getItem("hostName") !== 'null' ? sessionStorage.getItem("hostName") : "";
         explanationLevelSelected = sessionStorage.getItem("explanationLevel") !== 'null' ? sessionStorage.getItem("explanationLevel") : "teenager";
@@ -45,7 +47,7 @@
         formData.append("explanationLevel", explanationLevelSelected);
         formData.append("voice_id", voiceSelected.voice_id);
 
-        const res = await fetch(`${PUBLIC_API_URL}/update`, {
+        const res = await fetch(`${env.PUBLIC_API_URL}/update`, {
             method: "POST",
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -65,7 +67,7 @@
     };
 
     const getVoices = async () => {
-        let res = await fetch(`${PUBLIC_API_URL}/voices`);
+        let res = await fetch(`${env.PUBLIC_API_URL}/voices`);
         const json = await res.json();
         voices = json.voices;
         console.log(voices);

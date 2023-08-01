@@ -1,8 +1,7 @@
 <!-- create a registration page -->
 <script>
-    import {
-        PUBLIC_API_URL
-    } from '$env/dynamic/public'
+    import { onMount } from "svelte";
+
 
     let username = "";
     let password = "";
@@ -10,6 +9,15 @@
     let openai_api_key = "";
     let elabs_api_key = "";
     let error = "";
+    let env = {
+        PUBLIC_API_URL: "",
+    };
+
+    onMount(() => {
+        env = {
+            PUBLIC_API_URL: sessionStorage.getItem("serverUrl"),
+        };  
+    });
 
     const goback = () => {
         history.back();
@@ -33,7 +41,7 @@
         formData.append("openai_api_key", openai_api_key);
         formData.append("elabs_api_key", elabs_api_key);
 
-        const response = await fetch(`${PUBLIC_API_URL}/register`, {
+        const response = await fetch(`${env.PUBLIC_API_URL}/register`, {
             method: "POST",
             headers: {
                 "Access-Control-Allow-Origin": "*",

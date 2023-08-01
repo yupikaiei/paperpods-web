@@ -1,56 +1,30 @@
 <!-- create a login page -->
 <script>
-    import { onMount } from "svelte";
-    import { PUBLIC_API_URL } from "$env/dynamic/public";
+    import { env } from "$env/dynamic/public";
 
-    let username = "";
-    let password = "";
+    let serverUrl = "";
     let error = "";
 
-    onMount(async () => {
-        if (
-            sessionStorage.getItem("id") !== null &&
-            sessionStorage.getItem("podcast") !== undefined
-        ) {
-            window.location.href = "/Upload";
-        } else if (sessionStorage.getItem("id") !== null) {
-            window.location.href = "/Setup";
+    const validate = () => {
+        if (serverUrl == "") {
+            error = "Please fill in all fields";
+            return;
         }
-    });
 
-    const login = async () => {
-        const formData = new FormData();
-        formData.append("username", username);
-        formData.append("password", password);
-
-        const response = await fetch(`${PUBLIC_API_URL}login`, {
-            method: "POST",
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-            },
-            body: formData,
-        });
-
-        console.log(response);
-
-        const json = await response.json();
-        if (json.error) {
-            error = json.error;
-        } else {
-            sessionStorage.setItem("username", json.username);
-            sessionStorage.setItem("id", json.id);
-            sessionStorage.setItem("podcastName", json.podcastName);
-            sessionStorage.setItem("hostname", json.hostname);
-            sessionStorage.setItem("explanationLevel", json.explanationLevel);
-            sessionStorage.setItem("voice_id", json.voice_id);
-
-            if (json.podcast != null) {
-                window.location.href = "/Upload";
-                return;
-            }
-
-            window.location.href = "/Setup";
+        // make sure it ends with a slash
+        if (serverUrl[serverUrl.length - 1] != "/") {
+            serverUrl += "/";
         }
+
+        // if there's no env variable store in session
+        if(env.PUBLIC_API_URL == undefined) {
+            sessionStorage.setItem("serverUrl", serverUrl); 
+        }
+        else {
+            sessionStorage.setItem("serverUrl", env.PUBLIC_API_URL); 
+        }
+    
+        window.location.href = "/Login";
     };
 </script>
 
@@ -71,35 +45,21 @@
             <div class="card-body">
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text">Username</span>
+                        <span class="label-text">Server URL</span>
                     </label>
                     <input
                         type="text"
-                        placeholder="Username"
+                        placeholder="https://api.paperpods.xyz/"
                         class="input input-bordered"
-                        bind:value={username}
+                        bind:value={serverUrl}
                     />
                 </div>
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Password</span>
-                    </label>
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        class="input input-bordered"
-                        bind:value={password}
-                    />
-                    <label class="label">
-                        {#if error}
-                            <p class="error">{error}</p>
-                        {/if}
-                    </label>
+                <div>
+                    <p class="error">{error}</p>
                 </div>
                 <div class="form-control mt-6">
-                    <a href="/Register" class="btn btn">Sign up</a>
-                    <button class="btn btn-primary" on:click={login}
-                        >Sign in
+                    <button class="btn btn-primary" on:click={validate}
+                        >Submit
                     </button>
                 </div>
             </div>

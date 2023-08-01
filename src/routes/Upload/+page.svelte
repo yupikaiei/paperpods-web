@@ -1,17 +1,17 @@
 <script>
   import { onMount } from "svelte";
   import PodcastListItem from "../../components/PodcastListItem.svelte";
-  import {
-        PUBLIC_API_URL
-    } from '$env/dynamic/public'
 
   let id;
   let file;
   let podcasts = [];
   let generating = false;
+  let env = {
+    PUBLIC_API_URL: "",
+  };
 
   const getPodcasts = async () => {
-    const response = await fetch(`${PUBLIC_API_URL}podcasts/${id}`, {
+    const response = await fetch(`${env.PUBLIC_API_URL}podcasts/${id}`, {
       method: "GET",
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -25,6 +25,9 @@
 
   onMount(async () => {
     id = sessionStorage.getItem("id");
+    env = {
+      PUBLIC_API_URL: sessionStorage.getItem("serverUrl"),
+    };
     console.log(id);
     await getPodcasts();
   });
@@ -92,10 +95,10 @@
       {#each podcasts as podcast}
         <PodcastListItem
           name={podcast.name}
-          file={`${PUBLIC_API_URL}${podcast.file}`}
+          file={`${env.PUBLIC_API_URL}${podcast.file}`}
           id={podcast.id}
           paperTitle={podcast.paperTitle}
-          paperUrl={`${PUBLIC_API_URL}${podcast.paperUrl}`}
+          paperUrl={`${env.PUBLIC_API_URL}${podcast.paperUrl}`}
           host={podcast.host}
           image={podcast.image}
           created_at={podcast.created_at}
