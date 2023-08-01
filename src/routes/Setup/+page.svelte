@@ -47,7 +47,7 @@
         formData.append("explanationLevel", explanationLevelSelected);
         formData.append("voice_id", voiceSelected.voice_id);
 
-        const res = await fetch(`${env.PUBLIC_API_URL}/update`, {
+        const res = await fetch(`${env.PUBLIC_API_URL}update`, {
             method: "POST",
             headers: {
                 "Access-Control-Allow-Origin": "*",

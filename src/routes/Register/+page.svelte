@@ -41,7 +41,7 @@
         formData.append("openai_api_key", openai_api_key);
         formData.append("elabs_api_key", elabs_api_key);
 
-        const response = await fetch(`${env.PUBLIC_API_URL}/register`, {
+        const response = await fetch(`${env.PUBLIC_API_URL}register`, {
             method: "POST",
             headers: {
                 "Access-Control-Allow-Origin": "*",
